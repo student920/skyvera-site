@@ -175,88 +175,71 @@
     margin-bottom: 64px; line-height: 1.55;
   }
 
-  /* BENEFITS */
-  #benefits { background: var(--navy); color: var(--cream); }
-  #benefits .section-title { color: var(--cream); }
-  #benefits .section-num { color: var(--sky-bright); }
-  #benefits .section-lede { color: rgba(247, 245, 240, 0.7); }
-  .bento {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  /* PRODUCTS */
+  #products { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .product-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
   }
-  .bento-card {
-    background: var(--navy-mid);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 24px;
-    padding: 40px;
-    transition: all 0.3s;
-  }
-  .bento-card:hover {
-    border-color: var(--sky);
-    transform: translateY(-4px);
-  }
-  .bento-card.wide { grid-column: span 2; }
-  .bento-icon {
-    width: 56px; height: 56px;
-    background: rgba(79, 163, 227, 0.15);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
-    color: var(--sky-bright);
-  }
-  .bento-card h3 {
-    font-size: 24px; font-weight: 700;
-    letter-spacing: -0.015em; margin-bottom: 12px;
-    color: var(--cream);
-  }
-  .bento-card p {
-    font-size: 15px; color: rgba(247, 245, 240, 0.7);
-    line-height: 1.6;
-  }
-  .bento-stat {
-    font-size: 56px; font-weight: 800; line-height: 1;
-    color: var(--sky-bright); letter-spacing: -0.04em;
-    margin-bottom: 8px;
-  }
-  .bento-stat-label {
-    font-size: 14px; font-weight: 600;
-    color: rgba(247, 245, 240, 0.85);
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
-
-  /* AUDIENCE */
-  .audience-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-  }
-  .audience-card {
-    background: white;
+  .product-card {
+    background: var(--cream);
     border: 1px solid var(--border);
     border-radius: 24px;
-    padding: 40px 36px;
+    overflow: hidden;
     transition: all 0.3s;
+    display: flex; flex-direction: column;
   }
-  .audience-card:hover {
+  .product-card:hover {
     border-color: var(--sky);
     box-shadow: 0 24px 60px -20px rgba(11, 27, 58, 0.15);
     transform: translateY(-4px);
   }
-  .audience-tag {
-    display: inline-block;
-    padding: 6px 14px;
-    background: rgba(79, 163, 227, 0.12);
-    color: var(--sky);
-    border-radius: 999px;
-    font-size: 12px; font-weight: 700;
+  .product-img-wrapper {
+    width: 100%; aspect-ratio: 16/10; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .product-img-wrapper img {
+    width: 100%; height: 100%; object-fit: contain; padding: 20px;
+  }
+  .product-content {
+    padding: 36px; flex-grow: 1;
+    display: flex; flex-direction: column;
+  }
+  .product-tag {
+    display: inline-block; padding: 6px 14px;
+    background: rgba(79, 163, 227, 0.12); color: var(--sky);
+    border-radius: 999px; font-size: 12px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em;
-    margin-bottom: 24px;
+    margin-bottom: 20px; align-self: flex-start;
   }
-  .audience-card h4 {
+  .product-card h3 {
     font-size: 24px; font-weight: 700;
-    letter-spacing: -0.015em; margin-bottom: 14px;
-    color: var(--navy);
+    letter-spacing: -0.015em; margin-bottom: 14px; color: var(--navy);
   }
-  .audience-card p { color: var(--fg-dim); font-size: 15px; }
+  .product-card p { color: var(--fg-dim); font-size: 15px; margin-bottom: 20px; }
+  .product-specs {
+    list-style: none; padding: 0; margin-bottom: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .product-specs li {
+    display: flex; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .product-specs .spec-name { color: var(--fg-dim); }
+  .product-specs .spec-val { color: var(--navy); font-weight: 700; }
+  .product-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 24px; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: all 0.25s;
+    border-radius: 999px; letter-spacing: 0.01em;
+    background: var(--navy); color: var(--cream);
+    margin-top: auto; align-self: flex-start;
+  }
+  .product-cta:hover { background: var(--sky); transform: translateY(-2px); }
+  .product-cta::after { content: '→'; font-size: 16px; transition: transform 0.25s; }
+  .product-cta:hover::after { transform: translateX(4px); }
 
   /* CASES */
   #cases { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -348,19 +331,14 @@
   @media (max-width: 960px) {
     .hero-grid { grid-template-columns: 1fr; gap: 48px; }
     .swarm-illustration { max-width: 480px; margin: 0 auto; }
-    .bento { grid-template-columns: 1fr 1fr; }
-    .bento-card.wide { grid-column: span 2; }
-    .audience-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; gap: 56px; }
     .case-row { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
   }
   @media (max-width: 600px) {
     .container { padding: 0 20px; }
     section { padding: 80px 0; }
-    .bento { grid-template-columns: 1fr; }
-    .bento-card.wide { grid-column: span 1; }
-    .bento-card { padding: 32px 28px; }
-    .audience-card { padding: 32px 28px; }
+    .product-content { padding: 28px; }
     .cta { padding: 14px 24px; font-size: 14px; }
     h1 { font-size: 38px; }
   }
@@ -395,7 +373,7 @@
           <span data-lang="en">Drones that <span class="em">see more</span> and think for themselves.</span>
         </h1>
         <p class="lede">
-          <span data-lang="ru">SkyVera делает технологию, которая позволяет дронам замечать мелкие объекты на большом расстоянии, работать без связи с землёй и действовать слаженно — даже целым роем.</span>
+          <span data-lang="ru">SkyVera создаёт технологии, которые позволяют дронам замечать мелкие объекты на большом расстоянии, работать без связи с землёй и действовать слаженно — даже целым роем.</span>
           <span data-lang="en">SkyVera builds the technology that lets drones spot small objects from far away, operate without a ground link, and act as one — even an entire swarm.</span>
         </p>
         <div class="cta-row">
@@ -403,7 +381,7 @@
             <span data-lang="ru">Связаться</span>
             <span data-lang="en">Get in touch</span>
           </a>
-          <a href="#benefits" class="cta cta-secondary">
+          <a href="#products" class="cta cta-secondary">
             <span data-lang="ru">Узнать больше</span>
             <span data-lang="en">Learn more</span>
           </a>
@@ -466,150 +444,91 @@
   </div>
 </section>
 
-<section id="benefits">
+<!-- СЕКЦИЯ ПРОДУКТЫ (01) -->
+<section id="products">
   <div class="container">
-    <span class="section-num">01 — <span data-lang="ru">Преимущества</span><span data-lang="en">Benefits</span></span>
+    <span class="section-num">01 — <span data-lang="ru">Продукты</span><span data-lang="en">Products</span></span>
     <h2 class="section-title reveal">
-      <span data-lang="ru">Что это даёт вашему дрону</span>
-      <span data-lang="en">What it does for your drone</span>
+      <span data-lang="ru">Готовые решения SkyVera</span>
+      <span data-lang="en">Ready-made SkyVera solutions</span>
     </h2>
     <p class="section-lede reveal">
-      <span data-lang="ru">Мы не делаем дроны — мы делаем их умнее. SkyVera встраивается в существующую платформу производителя и сразу даёт результат.</span>
-      <span data-lang="en">We don't build drones — we make them smarter. SkyVera plugs into an existing manufacturer's platform and delivers results from day one.</span>
+      <span data-lang="ru">Аппаратные и программные комплексы для интеграции в ваши задачи.</span>
+      <span data-lang="en">Hardware and software systems for integration into your tasks.</span>
     </p>
 
-    <div class="bento reveal">
-      <div class="bento-card">
-        <div class="bento-stat">×2</div>
-        <div class="bento-stat-label">
-          <span data-lang="ru">Дальность обнаружения</span>
-          <span data-lang="en">Detection range</span>
+    <div class="product-grid reveal">
+      <!-- Продукт 1: Нейропроцессорный модуль -->
+      <div class="product-card">
+        <div class="product-img-wrapper">
+          <img src="AI_module_skyvera.png" alt="Нейропроцессорный модуль Скайвера RK3588">
         </div>
-        <p style="margin-top: 16px;">
-          <span data-lang="ru">Видим мелкие объекты в два раза дальше — без замены оборудования.</span>
-          <span data-lang="en">We see small objects twice as far — without replacing the hardware.</span>
-        </p>
+        <div class="product-content">
+          <div class="product-tag">
+            <span data-lang="ru">Вычислительный модуль</span>
+            <span data-lang="en">Computing module</span>
+          </div>
+          <h3>
+            <span data-lang="ru">Нейропроцессорный модуль Скайвера (RK3588)</span>
+            <span data-lang="en">SkyVera Neuroprocessor Module (RK3588)</span>
+          </h3>
+          <p>
+            <span data-lang="ru">Высокопроизводительный вычислительный модуль на базе процессора RK3588. Предназначен для задач машинного зрения и запуска нейросетей на борту беспилотников (Edge AI). Комплектуется высококачественными камерами дневного и ночного видения с поддержкой частоты обновления до 120 fps.</span>
+            <span data-lang="en">High-performance computing module based on RK3588 processor. Designed for machine vision, real-time video processing, and running neural networks on board drones (Edge AI).</span>
+          </p>
+          <a href="#contact" class="product-cta">
+            <span data-lang="ru">Запросить Стоимость</span>
+            <span data-lang="en">Request Pricing</span>
+          </a>
+        </div>
       </div>
 
-      <div class="bento-card wide">
-        <div class="bento-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      <!-- Продукт 2: Дрон перехватчик -->
+      <div class="product-card">
+        <div class="product-img-wrapper">
+          <img src="drone_interceptor.png" alt="Дрон перехватчик Скайвера">
         </div>
-        <h3>
-          <span data-lang="ru">Работает без связи с землёй</span>
-          <span data-lang="en">Works without a ground link</span>
-        </h3>
-        <p>
-          <span data-lang="ru">Дрон обрабатывает изображение прямо на борту. Заглушили связь? Помехи в эфире? Дрон продолжает выполнять задачу. Это критично для оборонных и промышленных задач, где надёжность важнее всего.</span>
-          <span data-lang="en">The drone processes everything on board. Jammed signal? Crowded airwaves? It still finishes the mission. Essential for defence and industrial work where reliability is everything.</span>
-        </p>
-      </div>
-
-      <div class="bento-card">
-        <div class="bento-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="product-content">
+          <div class="product-tag">
+            <span data-lang="ru">Система защиты</span>
+            <span data-lang="en">Defense system</span>
+          </div>
+          <h3>
+            <span data-lang="ru">Дрон перехватчик Скайвера</span>
+            <span data-lang="en">SkyVera Interceptor Drone</span>
+          </h3>
+          <p>
+            <span data-lang="ru">Современный дрон с нейропроцессорным модулем Скайвера для защиты объектов гражданской инфраструктуры от несанкционированных БПЛА.</span>
+            <span data-lang="en">Interception system to protect civilian infrastructure (airports, oil rigs, borders) from unauthorized UAVs.</span>
+          </p>
+          <ul class="product-specs">
+            <li>
+              <span class="spec-name"><span data-lang="ru">Макс. скорость</span><span data-lang="en">Max speed</span></span>
+              <span class="spec-val">265 км/ч</span>
+            </li>
+            <li>
+              <span class="spec-name"><span data-lang="ru">Взлетный вес</span><span data-lang="en">Takeoff weight</span></span>
+              <span class="spec-val">2 кг</span>
+            </li>
+            <li>
+              <span class="spec-name"><span data-lang="ru">Успешность перехвата</span><span data-lang="en">Interception success</span></span>
+              <span class="spec-val">≥ 90%</span>
+            </li>
+          </ul>
+          <a href="#contact" class="product-cta">
+            <span data-lang="ru">Запросить Стоимость</span>
+            <span data-lang="en">Request Pricing</span>
+          </a>
         </div>
-        <h3>
-          <span data-lang="ru">12 месяцев вместо 36</span>
-          <span data-lang="en">12 months instead of 36</span>
-        </h3>
-        <p>
-          <span data-lang="ru">Производитель добавляет «умную» линейку дронов в свой продукт за год — не за три.</span>
-          <span data-lang="en">A manufacturer adds a "smart" drone line to its product in one year — not three.</span>
-        </p>
-      </div>
-
-      <div class="bento-card">
-        <div class="bento-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
-        </div>
-        <h3>
-          <span data-lang="ru">Действует целый рой</span>
-          <span data-lang="en">An entire swarm acts as one</span>
-        </h3>
-        <p>
-          <span data-lang="ru">Сто дронов работают как один — оператор управляет миссией, а не каждым дроном по отдельности.</span>
-          <span data-lang="en">A hundred drones work as one — the operator runs the mission, not each drone individually.</span>
-        </p>
-      </div>
-
-      <div class="bento-card wide">
-        <div class="bento-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <h3>
-          <span data-lang="ru">Работает с любым ИИ — российским или зарубежным</span>
-          <span data-lang="en">Works with any AI — local or international</span>
-        </h3>
-        <p>
-          <span data-lang="ru">Каждый клиент использует ту нейросеть, которая ему нужна: GigaChat, Claude, Qwen или собственную модель компании. Один продукт — много клиентов с разными требованиями. Это снимает головную боль производителя дронов на международных рынках.</span>
-          <span data-lang="en">Every customer uses the AI they actually need: GigaChat, Claude, Qwen, or their own in-house model. One product, many customers with different requirements. A real headache-killer for drone manufacturers selling internationally.</span>
-        </p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="audience">
-  <div class="container">
-    <span class="section-num">02 — <span data-lang="ru">Для кого</span><span data-lang="en">Who it's for</span></span>
-    <h2 class="section-title reveal">
-      <span data-lang="ru">Партнёры, которым мы нужны</span>
-      <span data-lang="en">Who we partner with</span>
-    </h2>
-
-    <div class="audience-grid reveal">
-      <div class="audience-card">
-        <div class="audience-tag">
-          <span data-lang="ru">Производители дронов</span>
-          <span data-lang="en">Drone manufacturers</span>
-        </div>
-        <h4>
-          <span data-lang="ru">Готовый «умный» модуль для вашей платформы</span>
-          <span data-lang="en">Ready-made smart module for your platform</span>
-        </h4>
-        <p>
-          <span data-lang="ru">Лицензируйте нашу технологию вместо того, чтобы 3 года собирать собственную команду. Мы интегрируемся с вашим автопилотом за один спринт.</span>
-          <span data-lang="en">License our technology instead of spending three years building your own team. We integrate with your autopilot in a single sprint.</span>
-        </p>
-      </div>
-
-      <div class="audience-card">
-        <div class="audience-tag">
-          <span data-lang="ru">Энергетика и нефтегаз</span>
-          <span data-lang="en">Energy &amp; oil/gas</span>
-        </div>
-        <h4>
-          <span data-lang="ru">Защита и мониторинг объектов</span>
-          <span data-lang="en">Site protection &amp; monitoring</span>
-        </h4>
-        <p>
-          <span data-lang="ru">Автономный обход трубопроводов и линий электропередач, обнаружение нарушителей, реагирование без оператора. Меньше людей, выше надёжность.</span>
-          <span data-lang="en">Autonomous patrols of pipelines and power lines, intruder detection, response without an operator. Fewer people, higher reliability.</span>
-        </p>
-      </div>
-
-      <div class="audience-card">
-        <div class="audience-tag">
-          <span data-lang="ru">Оборона и безопасность</span>
-          <span data-lang="en">Defence &amp; security</span>
-        </div>
-        <h4>
-          <span data-lang="ru">Надёжность в сложных условиях</span>
-          <span data-lang="en">Reliability under tough conditions</span>
-        </h4>
-        <p>
-          <span data-lang="ru">Полностью автономная работа в условиях радиоэлектронной борьбы. Координация группы дронов с минимальным участием оператора.</span>
-          <span data-lang="en">Fully autonomous operation under electronic warfare. Group coordination with minimal operator involvement.</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- СЕКЦИЯ ПРИМЕНЕНИЕ (02) -->
 <section id="cases">
   <div class="container">
-    <span class="section-num">03 — <span data-lang="ru">Применение</span><span data-lang="en">Applications</span></span>
+    <span class="section-num">02 — <span data-lang="ru">Применение</span><span data-lang="en">Applications</span></span>
     <h2 class="section-title reveal">
       <span data-lang="ru">Сценарии применения</span>
       <span data-lang="en">Use cases</span>
@@ -623,7 +542,7 @@
           <span data-lang="en">Search &amp; rescue</span>
         </div>
         <div class="case-desc">
-          <span data-lang="ru">Находим человека в лесу там, где обычные нейросети теряют его в листве.</span>
+          <span data-lang="ru">Нейропроцессорный модуль Скайвера позволяет искать людей и другие объекты интереса там, где прочие решения не справляются.</span>
           <span data-lang="en">Spot a person in the forest where ordinary networks lose them in the foliage.</span>
         </div>
       </div>
@@ -631,35 +550,23 @@
       <div class="case-row">
         <div class="case-num">/02</div>
         <div class="case-title">
-          <span data-lang="ru">Мониторинг инфраструктуры</span>
-          <span data-lang="en">Infrastructure monitoring</span>
+          <span data-lang="ru">Охрана периметра</span>
+          <span data-lang="en">Perimeter security</span>
         </div>
         <div class="case-desc">
-          <span data-lang="ru">Автономный обход трубопроводов, ЛЭП, складов с автоматическим выявлением аномалий.</span>
-          <span data-lang="en">Autonomous patrols of pipelines, power lines, and storage with automatic anomaly detection.</span>
+          <span data-lang="ru">Раннее обнаружение нарушителей днём и ночью с помощью камер модуля Скайвера, автоматическое сопровождение цели.</span>
+          <span data-lang="en">Early intruder detection day and night, automatic target tracking.</span>
         </div>
       </div>
 
       <div class="case-row">
         <div class="case-num">/03</div>
         <div class="case-title">
-          <span data-lang="ru">Охрана периметра</span>
-          <span data-lang="en">Perimeter security</span>
-        </div>
-        <div class="case-desc">
-          <span data-lang="ru">Раннее обнаружение нарушителей днём и ночью, автоматическое сопровождение цели.</span>
-          <span data-lang="en">Early intruder detection day and night, automatic target tracking.</span>
-        </div>
-      </div>
-
-      <div class="case-row">
-        <div class="case-num">/04</div>
-        <div class="case-title">
-          <span data-lang="ru">Координация группы дронов</span>
+          <span data-lang="ru">Защита воздушного пространства</span>
           <span data-lang="en">Group coordination</span>
         </div>
         <div class="case-desc">
-          <span data-lang="ru">Десятки дронов выполняют одну задачу, обмениваясь информацией в реальном времени.</span>
+          <span data-lang="ru">Дрон-перехватчик Скайвера нейтрализует несанкционированные БПЛА над гражданскими объектами.</span>
           <span data-lang="en">Dozens of drones share information in real time and execute one mission together.</span>
         </div>
       </div>
@@ -672,7 +579,7 @@
     <div class="contact-grid">
       <div class="reveal">
         <div class="contact-big">
-          <span data-lang="ru">Давайте сделаем<br>ваши дроны<br><span class="em">умнее</span>.</span>
+          <span data-lang="ru">Делаем дроны умнее.</span>
           <span data-lang="en">Let's make<br>your drones<br><span class="em">smarter</span>.</span>
         </div>
         <p class="contact-sub">
@@ -716,12 +623,22 @@
 </footer>
 
 <script>
+  // Словарь заголовков для разных языков
+  const siteTitles = {
+    'ru': 'SkyVera — умные дроны для бизнеса и обороны',
+    'en': 'SkyVera — Smart drones for business and defence'
+  };
+
   function setLang(lang) {
     document.documentElement.lang = lang;
+    // Меняем заголовок вкладки браузера
+    document.title = siteTitles[lang] || siteTitles['ru'];
+    
     document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     try { localStorage.setItem('skyvera-lang', lang); } catch(e) {}
   }
+  
   try {
     const saved = localStorage.getItem('skyvera-lang');
     if (saved) setLang(saved);
