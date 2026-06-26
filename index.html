@@ -3,12 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkyVera — умные дроны для бизнеса и обороны</title>
-<meta name="description" content="SkyVera делает дроны автономными. Видят больше, думают быстрее, работают вместе.">
+
+<!-- SEO: Title и Description -->
+<title>Скайвера (SkyVera) — умные дроны и нейропроцессорные модули</title>
+<meta name="description" content="Скайвера (SkyVera) — разработчик нейропроцессорных модулей (RK3588) и дронов-перехватчиков для защиты гражданской инфраструктуры. Делаем дроны автономными и умными.">
+<meta name="keywords" content="Скайвера, SkyVera, дроны, БПЛА, нейропроцессорный модуль, RK3588, дрон перехватчик, защита от дронов, автономные дроны">
+<meta name="author" content="ООО Скайвера">
+
+<!-- SEO: Каноническая ссылка -->
+<link rel="canonical" href="https://www.skyvera.ru/">
+
+<!-- SEO: Open Graph (для красивых ссылок в соцсетях) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.skyvera.ru/">
+<meta property="og:title" content="Скайвера (SkyVera) — умные дроны и нейропроцессоры">
+<meta property="og:description" content="Разработчик нейропроцессорных модулей и дронов-перехватчиков. Делаем дроны автономными.">
+<meta property="og:image" content="https://www.skyvera.ru/logo.png">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Иконка сайта -->
 <link rel="icon" type="image/png" href="logo.png">
+
+<!-- Шрифты -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- SEO: Микроразметка для поисковиков (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Скайвера",
+  "alternateName": "SkyVera",
+  "url": "https://www.skyvera.ru",
+  "logo": "https://www.skyvera.ru/logo.png",
+  "description": "Разработчик нейропроцессорных модулей и дронов-перехватчиков для защиты гражданской инфраструктуры.",
+  "email": "info@skyvera.ru",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "RU"
+  }
+}
+</script>
+
 <style>
   :root {
     --navy: #0B1B3A;
@@ -352,7 +390,7 @@
 
 <header>
   <div class="container">
-    <img src="logo.png" alt="SkyVera" class="logo-img">
+    <img src="logo.png" alt="Логотип компании Скайвера (SkyVera)" class="logo-img">
     <div class="lang-switch">
       <button id="btn-ru" class="active" onclick="setLang('ru')">RU</button>
       <button id="btn-en" onclick="setLang('en')">EN</button>
@@ -461,7 +499,7 @@
       <!-- Продукт 1: Нейропроцессорный модуль -->
       <div class="product-card">
         <div class="product-img-wrapper">
-          <img src="AI_module_skyvera.png" alt="Нейропроцессорный модуль Скайвера RK3588">
+          <img src="AI_module_skyvera.png" alt="Нейропроцессорный модуль Скайвера на базе RK3588">
         </div>
         <div class="product-content">
           <div class="product-tag">
@@ -486,7 +524,7 @@
       <!-- Продукт 2: Дрон перехватчик -->
       <div class="product-card">
         <div class="product-img-wrapper">
-          <img src="drone_interceptor.png" alt="Дрон перехватчик Скайвера">
+          <img src="drone_interceptor.png" alt="Дрон перехватчик Скайвера для защиты объектов">
         </div>
         <div class="product-content">
           <div class="product-tag">
@@ -614,7 +652,7 @@
 
 <footer>
   <div class="container">
-    <div>© 2026 SkyVera</div>
+    <div>© 2026 SkyVera (Скайвера)</div>
     <div>
       <span data-lang="ru">Сделано в России</span>
       <span data-lang="en">Made in Russia</span>
@@ -623,15 +661,15 @@
 </footer>
 
 <script>
-  // Словарь заголовков для разных языков
+  // Словарь заголовков для разных языков (SEO)
   const siteTitles = {
-    'ru': 'SkyVera — умные дроны для бизнеса и обороны',
-    'en': 'SkyVera — Smart drones for business and defence'
+    'ru': 'Скайвера (SkyVera) — умные дроны и нейропроцессорные модули',
+    'en': 'SkyVera — Smart drones and neuroprocessor modules'
   };
 
   function setLang(lang) {
     document.documentElement.lang = lang;
-    // Меняем заголовок вкладки браузера
+    // Меняем заголовок вкладки браузера для SEO
     document.title = siteTitles[lang] || siteTitles['ru'];
     
     document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
