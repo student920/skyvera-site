@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO: Title и Description -->
+<title>Нейропроцессорный модуль RK3588 для дронов и БПЛА — Скайвера (SkyVera)</title>
+<meta name="description" content="Нейропроцессорный модуль Скайвера на RK3588 — бортовой Edge AI для дронов: машинное зрение, камеры день/ночь до 120 fps. Альтернатива Orange Pi 5 и Raspberry Pi для БПЛА. Дрон-перехватчик для защиты инфраструктуры.">
+<meta name="keywords" content="Скайвера, SkyVera, нейропроцессорный модуль, RK3588, Edge AI, бортовой компьютер для дрона, машинное зрение БПЛА, Orange Pi 5 альтернатива, Raspberry Pi для дрона, NPU 6 TOPS, дрон перехватчик, защита от дронов, автономные дроны">
+<meta name="author" content="ООО Скайвера">
+
+<!-- SEO: Каноническая ссылка -->
+<link rel="canonical" href="https://www.skyvera.ru/">
+
+<!-- SEO: Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.skyvera.ru/">
+<meta property="og:title" content="Нейропроцессорный модуль RK3588 для дронов — SkyVera">
+<meta property="og:description" content="Бортовой Edge AI для БПЛА: RK3588, 6 TOPS NPU, камеры день/ночь до 120 fps. Для разработчиков, использующих Orange Pi и Raspberry Pi.">
+<meta property="og:image" content="https://www.skyvera.ru/og-image.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Иконки сайта -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Шрифты -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- SEO: Микроразметка (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Скайвера",
+  "alternateName": "SkyVera",
+  "url": "https://www.skyvera.ru",
+  "logo": "https://www.skyvera.ru/logo.png",
+  "description": "Разработчик нейропроцессорных модулей и дронов-перехватчиков для защиты гражданской инфраструктуры.",
+  "email": "info@skyvera.ru",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "RU"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Нейропроцессорный модуль Скайвера (RK3588)",
+  "image": "https://www.skyvera.ru/AI_module_skyvera.png",
+  "description": "Вычислительный модуль на базе RK3588 (NPU 6 TOPS) для машинного зрения и запуска нейросетей на борту БПЛА. Камеры дневного и ночного видения до 120 fps. Альтернатива Orange Pi 5 и Raspberry Pi для установки на дрон.",
+  "brand": { "@type": "Brand", "name": "SkyVera" }
+}
+</script>
+
+<style>
+  :root {
+    --navy: #0C1D3D;
+    --navy-deep: #081430;
+    --navy-mid: #16294F;
+    --sky: #2E7CF6;
+    --sky-bright: #22B8CF;
+    --paper: #FFFFFF;
+    --mist: #F5F7FA;
+    --fg: #1A2337;
+    --fg-dim: #5B6577;
+    --border: #E3E8F0;
+    --sans: 'Golos Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    --display: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--navy); color: #FFFFFF; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* HEADER */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom: 1px solid var(--border);
+  }
+  header .container {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; padding-bottom: 16px;
+  }
+  .logo-img { height: 32px; width: auto; display: block; }
+  .lang-switch {
+    display: flex; gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--mono);
+  }
+  .lang-switch button {
+    background: none; color: var(--fg-dim); border: none;
+    padding: 7px 14px; cursor: pointer; font-family: inherit;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .lang-switch button.active { background: var(--navy); color: #FFFFFF; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding-top: 120px; padding-bottom: 80px;
+    position: relative;
+    background: var(--navy);
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  .hero .container { position: relative; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px;
+    align-items: center; width: 100%;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px; color: #7E9BD1; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 28px; display: flex; align-items: center; gap: 14px;
+    animation: fadeUp 0.8s ease-out;
+  }
+  .eyebrow::before {
+    content: ''; width: 28px; height: 2px; background: var(--sky);
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 800; line-height: 1.06; letter-spacing: -0.015em;
+    margin-bottom: 30px; color: #FFFFFF;
+    animation: fadeUp 0.9s ease-out 0.1s both;
+  }
+  h1 .em { color: var(--sky); font-style: normal; display: inline-block; }
+  .lede {
+    font-size: clamp(17px, 1.5vw, 20px); font-weight: 400;
+    color: #B8C6E2; max-width: 56ch; line-height: 1.6;
+    margin-bottom: 40px;
+    animation: fadeUp 1s ease-out 0.2s both;
+  }
+  .cta-row {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 1.1s ease-out 0.3s both;
+  }
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 28px; font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all 0.25s;
+    border-radius: 6px; letter-spacing: 0.01em;
+  }
+  .cta-primary { background: var(--sky); color: #FFFFFF; }
+  .cta-primary:hover { background: #FFFFFF; color: var(--navy); transform: translateY(-2px); }
+  .cta-secondary {
+    background: transparent; color: #FFFFFF;
+    border: 1px solid #3E5A96;
+  }
+  .cta-secondary:hover { border-color: #FFFFFF; }
+  .cta::after { content: '→'; font-size: 18px; transition: transform 0.25s; }
+  .cta:hover::after { transform: translateX(4px); }
+  .hero-telemetry {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    margin-top: 44px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    color: #7E9BD1;
+    animation: fadeUp 1.2s ease-out 0.4s both;
+  }
+  .hero-telemetry .accent { color: var(--sky-bright); }
+
+  /* SVG SWARM */
+  .swarm-illustration {
+    position: relative; width: 100%; aspect-ratio: 1;
+    animation: fadeUp 1.2s ease-out 0.4s both;
+  }
+  .swarm-illustration svg {
+    width: 100%; height: 100%; overflow: visible;
+  }
+  .drone-body { fill: #FFFFFF; }
+  .drone-arm { stroke: #FFFFFF; }
+  .drone-prop { fill: var(--sky); opacity: 0.7; }
+  .connect-line {
+    stroke: var(--sky); stroke-width: 1; fill: none;
+    stroke-dasharray: 3 4; opacity: 0.45;
+  }
+  .scan-circle {
+    fill: none; stroke: var(--sky); stroke-width: 1; opacity: 0.3;
+  }
+  .pulse-ring {
+    fill: none; stroke: var(--sky); stroke-width: 1.5;
+    transform-origin: 250px 250px; opacity: 0;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.3); opacity: 0.7; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .pulse-ring.p1 { animation: pulse 4s ease-out infinite; }
+  .pulse-ring.p2 { animation: pulse 4s ease-out infinite 1.3s; }
+  .pulse-ring.p3 { animation: pulse 4s ease-out infinite 2.6s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .drone { transform-origin: center; }
+  .drone.f1 { animation: float 3.5s ease-in-out infinite; }
+  .drone.f2 { animation: float 4s ease-in-out infinite 0.5s; }
+  .drone.f3 { animation: float 3.2s ease-in-out infinite 1s; }
+  .drone.f4 { animation: float 3.8s ease-in-out infinite 0.3s; }
+  .drone.f5 { animation: float 3.4s ease-in-out infinite 1.5s; }
+  .drone.f6 { animation: float 3.6s ease-in-out infinite 0.8s; }
+  .drone.f7 { animation: float 4.2s ease-in-out infinite 1.2s; }
+
+  /* SECTIONS */
+  section { padding: 110px 0; position: relative; }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 12px; color: var(--sky); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 16px; display: block;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 50px); font-weight: 700;
+    line-height: 1.08; letter-spacing: -0.015em;
+    margin-bottom: 22px; max-width: 24ch; color: var(--navy);
+  }
+  .section-lede {
+    font-size: 18px; color: var(--fg-dim); max-width: 62ch;
+    margin-bottom: 56px; line-height: 1.6;
+  }
+
+  /* PRODUCTS */
+  #products { background: var(--paper); }
+  .product-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  }
+  .product-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .product-card:hover {
+    border-color: var(--sky);
+    box-shadow: 0 20px 50px -20px rgba(12, 29, 61, 0.18);
+    transform: translateY(-4px);
+  }
+  .product-img-wrapper {
+    width: 100%; aspect-ratio: 16/10; background: var(--mist);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .product-img-wrapper::before, .product-img-wrapper::after {
+    content: ''; position: absolute; width: 16px; height: 16px;
+  }
+  .product-img-wrapper::before { left: 14px; top: 14px; border-left: 2px solid var(--sky); border-top: 2px solid var(--sky); }
+  .product-img-wrapper::after { right: 14px; bottom: 14px; border-right: 2px solid var(--sky); border-bottom: 2px solid var(--sky); }
+  .product-img-wrapper img {
+    width: 100%; height: 100%; object-fit: contain; padding: 24px;
+  }
+  .product-content {
+    padding: 32px; flex-grow: 1;
+    display: flex; flex-direction: column;
+  }
+  .product-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    color: var(--sky);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 16px; align-self: flex-start;
+  }
+  .product-card h3 {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 14px; color: var(--navy);
+  }
+  .product-card p { color: var(--fg-dim); font-size: 15px; margin-bottom: 20px; }
+  .product-specs {
+    list-style: none; padding: 0; margin-bottom: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .product-specs li {
+    display: flex; justify-content: space-between;
+    padding: 11px 0; border-bottom: 1px solid var(--border);
+    font-size: 14.5px;
+  }
+  .product-specs .spec-name { color: var(--fg-dim); }
+  .product-specs .spec-val { color: var(--navy); font-weight: 600; font-family: var(--mono); font-size: 13px; }
+  .product-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px; font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: all 0.25s;
+    border-radius: 6px; letter-spacing: 0.01em;
+    border: 1px solid var(--sky); color: var(--sky); background: transparent;
+    margin-top: auto; align-self: flex-start;
+  }
+  .product-cta:hover { background: var(--sky); color: #FFFFFF; transform: translateY(-2px); }
+  .product-cta::after { content: '→'; font-size: 16px; transition: transform 0.25s; }
+  .product-cta:hover::after { transform: translateX(4px); }
+
+  /* DEVELOPERS */
+  #developers { background: var(--mist); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .dev-card {
+    background: var(--paper); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: all 0.3s;
+  }
+  .dev-card:hover { border-color: var(--sky); transform: translateY(-3px); }
+  .dev-tag {
+    font-family: var(--mono); font-size: 10.5px; color: var(--sky);
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+  }
+  .dev-card h3 {
+    font-family: var(--display); font-size: 18px; font-weight: 700;
+    color: var(--navy); letter-spacing: -0.01em;
+  }
+  .dev-card p { font-size: 14px; color: var(--fg-dim); line-height: 1.6; }
+
+  /* CASES */
+  #cases { background: var(--paper); }
+  .cases-list { display: grid; gap: 0; }
+  .case-row {
+    display: grid; grid-template-columns: 80px 1fr 2fr;
+    gap: 32px; padding: 34px 0;
+    border-top: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .case-row:hover { background: rgba(46, 124, 246, 0.03); }
+  .case-row:last-child { border-bottom: 1px solid var(--border); }
+  .case-num {
+    font-family: var(--mono);
+    font-size: 13px; font-weight: 600; color: var(--sky);
+    letter-spacing: 0.05em;
+  }
+  .case-title {
+    font-family: var(--display);
+    font-size: 19px; font-weight: 700; color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .case-desc { color: var(--fg-dim); font-size: 15px; }
+
+  /* CONTACT */
+  #contact { background: var(--navy); color: #FFFFFF; padding: 130px 0; position: relative; overflow: hidden; }
+  #contact::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  #contact .container { position: relative; }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .contact-big {
+    font-family: var(--display);
+    font-size: clamp(38px, 4.5vw, 60px); font-weight: 800;
+    line-height: 1.05; letter-spacing: -0.015em;
+    color: #FFFFFF;
+  }
+  .contact-big .em { color: var(--sky-bright); }
+  .contact-sub {
+    font-size: 17px; color: #B8C6E2;
+    margin-top: 24px; max-width: 42ch; line-height: 1.6;
+  }
+  .contact-list { display: grid; gap: 18px; }
+  .contact-item {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 22px 26px;
+    transition: all 0.25s;
+  }
+  .contact-item:hover {
+    border-color: var(--sky);
+    transform: translateX(4px);
+  }
+  .contact-item .key {
+    font-family: var(--mono);
+    font-size: 11px; color: #7E9BD1;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 500; margin-bottom: 8px;
+  }
+  .contact-item a {
+    color: #FFFFFF; font-size: 20px; text-decoration: none;
+    font-weight: 600; letter-spacing: -0.01em;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .contact-item a::after { content: '→'; opacity: 0.5; transition: all 0.2s; }
+  .contact-item:hover a::after { opacity: 1; transform: translateX(4px); }
+  .contact-item .legal { font-size: 15px; color: #B8C6E2; font-weight: 400; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 0; background: var(--navy-deep);
+    color: #7E9BD1;
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.08em;
+  }
+  footer .container {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .swarm-illustration { max-width: 440px; margin: 0 auto; }
+    .product-grid { grid-template-columns: 1fr; }
+    .dev-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+    .case-row { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    section { padding: 80px 0; }
+    .product-content { padding: 26px; }
+    .cta { padding: 14px 24px; font-size: 14px; }
+    h1 { font-size: 36px; }
+  }
+
+  [data-lang="en"] { display: none; }
+  html[lang="en"] [data-lang="ru"] { display: none; }
+  html[lang="en"] [data-lang="en"] { display: initial; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <img src="logo.png" alt="Логотип компании Скайвера (SkyVera)" class="logo-img">
+    <div class="lang-switch">
+      <button id="btn-ru" class="active" onclick="setLang('ru')">RU</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">
+          <span data-lang="ru">Техническое зрение для бизнеса и обороны</span>
+          <span data-lang="en">Machine vision for business and defence</span>
+        </div>
+        <h1>
+          <span data-lang="ru">Дроны, которые <span class="em">видят дальше</span> и действуют сами.</span>
+          <span data-lang="en">Drones that <span class="em">see farther</span> and act on their own.</span>
+        </h1>
+        <p class="lede">
+          <span data-lang="ru">SkyVera создаёт технологии, которые позволяют дронам замечать мелкие объекты на большом расстоянии, работать без связи с землёй и действовать слаженно — даже целым роем.</span>
+          <span data-lang="en">SkyVera builds the technology that lets drones spot small objects from far away, operate without a ground link, and act as one — even an entire swarm.</span>
+        </p>
+        <div class="cta-row">
+          <a href="#contact" class="cta cta-primary">
+            <span data-lang="ru">Связаться</span>
+            <span data-lang="en">Get in touch</span>
+          </a>
+          <a href="#products" class="cta cta-secondary">
+            <span data-lang="ru">Узнать больше</span>
+            <span data-lang="en">Learn more</span>
+          </a>
+        </div>
+        <div class="hero-telemetry">
+          <span data-lang="ru">ОБНАРУЖЕНИЕ МАЛЫХ ОБЪЕКТОВ</span>
+          <span data-lang="en">SMALL-OBJECT DETECTION</span>
+          <span data-lang="ru">АВТОНОМНАЯ НАВИГАЦИЯ</span>
+          <span data-lang="en">AUTONOMOUS NAVIGATION</span>
+          <span class="accent" data-lang="ru">КООРДИНАЦИЯ РОЯ</span>
+          <span class="accent" data-lang="en">SWARM COORDINATION</span>
+        </div>
+      </div>
+
+      <div class="swarm-illustration">
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+          <circle class="scan-circle" cx="250" cy="250" r="220"/>
+          <circle class="scan-circle" cx="250" cy="250" r="160"/>
+          <circle class="scan-circle" cx="250" cy="250" r="100"/>
+          <circle class="pulse-ring p1" cx="250" cy="250" r="80"/>
+          <circle class="pulse-ring p2" cx="250" cy="250" r="80"/>
+          <circle class="pulse-ring p3" cx="250" cy="250" r="80"/>
+
+          <line class="connect-line" x1="250" y1="250" x2="120" y2="140"/>
+          <line class="connect-line" x1="250" y1="250" x2="380" y2="130"/>
+          <line class="connect-line" x1="250" y1="250" x2="100" y2="320"/>
+          <line class="connect-line" x1="250" y1="250" x2="400" y2="350"/>
+          <line class="connect-line" x1="250" y1="250" x2="180" y2="420"/>
+          <line class="connect-line" x1="250" y1="250" x2="350" y2="430"/>
+          <line class="connect-line" x1="120" y1="140" x2="380" y2="130"/>
+          <line class="connect-line" x1="100" y1="320" x2="180" y2="420"/>
+          <line class="connect-line" x1="400" y1="350" x2="350" y2="430"/>
+
+          <symbol id="drone-icon" viewBox="-30 -30 60 60">
+            <line class="drone-arm" x1="-18" y1="-18" x2="18" y2="18" stroke-width="3" stroke-linecap="round"/>
+            <line class="drone-arm" x1="18" y1="-18" x2="-18" y2="18" stroke-width="3" stroke-linecap="round"/>
+            <circle class="drone-prop" cx="-18" cy="-18" r="9"/>
+            <circle class="drone-prop" cx="18" cy="-18" r="9"/>
+            <circle class="drone-prop" cx="-18" cy="18" r="9"/>
+            <circle class="drone-prop" cx="18" cy="18" r="9"/>
+            <circle class="drone-body" cx="0" cy="0" r="6"/>
+          </symbol>
+
+          <g class="drone f1" transform="translate(250, 250) scale(1.3)"><use href="#drone-icon"/></g>
+          <g class="drone f2" transform="translate(120, 140) scale(0.85)"><use href="#drone-icon"/></g>
+          <g class="drone f3" transform="translate(380, 130) scale(0.85)"><use href="#drone-icon"/></g>
+          <g class="drone f4" transform="translate(100, 320) scale(0.8)"><use href="#drone-icon"/></g>
+          <g class="drone f5" transform="translate(400, 350) scale(0.85)"><use href="#drone-icon"/></g>
+          <g class="drone f6" transform="translate(180, 420) scale(0.75)"><use href="#drone-icon"/></g>
+          <g class="drone f7" transform="translate(350, 430) scale(0.8)"><use href="#drone-icon"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЕКЦИЯ ПРОДУКТЫ (01) -->
+<section id="products">
+  <div class="container">
+    <span class="section-num">01 — <span data-lang="ru">Продукты</span><span data-lang="en">Products</span></span>
+    <h2 class="section-title reveal">
+      <span data-lang="ru">Готовые решения SkyVera</span>
+      <span data-lang="en">Ready-made SkyVera solutions</span>
+    </h2>
+    <p class="section-lede reveal">
+      <span data-lang="ru">Аппаратные и программные комплексы для интеграции в ваши задачи.</span>
+      <span data-lang="en">Hardware and software systems for integration into your tasks.</span>
+    </p>
+
+    <div class="product-grid reveal">
+      <!-- Продукт 1: Нейропроцессорный модуль -->
+      <div class="product-card">
+        <div class="product-img-wrapper">
+          <img src="AI_module_skyvera.png" alt="Нейропроцессорный модуль Скайвера на базе RK3588 — бортовой Edge AI для дронов">
+        </div>
+        <div class="product-content">
+          <div class="product-tag">
+            <span data-lang="ru">Вычислительный модуль</span>
+            <span data-lang="en">Computing module</span>
+          </div>
+          <h3>
+            <span data-lang="ru">Нейропроцессорный модуль Скайвера (RK3588)</span>
+            <span data-lang="en">SkyVera Neuroprocessor Module (RK3588)</span>
+          </h3>
+          <p>
+            <span data-lang="ru">Вычислительный модуль на базе процессора RK3588 для машинного зрения и запуска нейросетей на борту беспилотников (Edge AI). Комплектуется камерами дневного и ночного видения с частотой обновления до 120 fps.</span>
+            <span data-lang="en">Computing module based on the RK3588 processor for machine vision and on-board neural networks (Edge AI). Fitted with day and night cameras at up to 120 fps.</span>
+          </p>
+          <ul class="product-specs">
+            <li>
+              <span class="spec-name"><span data-lang="ru">Процессор</span><span data-lang="en">Processor</span></span>
+              <span class="spec-val">RK3588 · NPU 6 TOPS</span>
+            </li>
+            <li>
+              <span class="spec-name"><span data-lang="ru">Камеры</span><span data-lang="en">Cameras</span></span>
+              <span class="spec-val"><span data-lang="ru">ДЕНЬ / НОЧЬ · 120 FPS</span><span data-lang="en">DAY / NIGHT · 120 FPS</span></span>
+            </li>
+          </ul>
+          <a href="#contact" class="product-cta">
+            <span data-lang="ru">Запросить стоимость</span>
+            <span data-lang="en">Request pricing</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Продукт 2: Дрон перехватчик -->
+      <div class="product-card">
+        <div class="product-img-wrapper">
+          <img src="drone_interceptor.png" alt="Дрон-перехватчик Скайвера для защиты объектов от БПЛА">
+        </div>
+        <div class="product-content">
+          <div class="product-tag">
+            <span data-lang="ru">Система защиты</span>
+            <span data-lang="en">Defense system</span>
+          </div>
+          <h3>
+            <span data-lang="ru">Дрон-перехватчик Скайвера</span>
+            <span data-lang="en">SkyVera Interceptor Drone</span>
+          </h3>
+          <p>
+            <span data-lang="ru">Дрон с нейропроцессорным модулем Скайвера для защиты объектов гражданской инфраструктуры — аэропортов, промышленных площадок, границ — от несанкционированных БПЛА.</span>
+            <span data-lang="en">A drone with the SkyVera neuroprocessor module that protects civilian infrastructure — airports, industrial sites, borders — from unauthorized UAVs.</span>
+          </p>
+          <ul class="product-specs">
+            <li>
+              <span class="spec-name"><span data-lang="ru">Макс. скорость</span><span data-lang="en">Max speed</span></span>
+              <span class="spec-val"><span data-lang="ru">265 КМ/Ч</span><span data-lang="en">265 KM/H</span></span>
+            </li>
+            <li>
+              <span class="spec-name"><span data-lang="ru">Взлётный вес</span><span data-lang="en">Takeoff weight</span></span>
+              <span class="spec-val"><span data-lang="ru">2 КГ</span><span data-lang="en">2 KG</span></span>
+            </li>
+            <li>
+              <span class="spec-name"><span data-lang="ru">Успешность перехвата</span><span data-lang="en">Interception success</span></span>
+              <span class="spec-val">≥ 90%</span>
+            </li>
+          </ul>
+          <a href="#contact" class="product-cta">
+            <span data-lang="ru">Запросить стоимость</span>
+            <span data-lang="en">Request pricing</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЕКЦИЯ ДЛЯ РАЗРАБОТЧИКОВ (02) -->
+<section id="developers">
+  <div class="container">
+    <span class="section-num">02 — <span data-lang="ru">Разработчикам</span><span data-lang="en">Developers</span></span>
+    <h2 class="section-title reveal">
+      <span data-lang="ru">Для разработчиков</span>
+      <span data-lang="en">For developers</span>
+    </h2>
+    <p class="section-lede reveal">
+      <span data-lang="ru">Модуль Скайвера — не только для наших дронов. Если вы строите бортовой ИИ на Orange Pi 5, Raspberry Pi или Jetson — это готовая альтернатива, спроектированная для установки на БПЛА.</span>
+      <span data-lang="en">The SkyVera module is not just for our drones. If you build on-board AI with Orange Pi 5, Raspberry Pi, or Jetson — this is a ready alternative engineered for UAV deployment.</span>
+    </p>
+
+    <div class="dev-grid reveal">
+      <div class="dev-card">
+        <div class="dev-tag">RK3588 · 6 TOPS NPU</div>
+        <h3>
+          <span data-lang="ru">Знакомая платформа</span>
+          <span data-lang="en">A familiar platform</span>
+        </h3>
+        <p>
+          <span data-lang="ru">Тот же чип, что в Orange Pi 5: RK3588 с NPU 6 TOPS. Привычный стек — Linux, Python, стандартные фреймворки инференса — без переучивания команды.</span>
+          <span data-lang="en">The same chip as Orange Pi 5: RK3588 with a 6 TOPS NPU. The stack you know — Linux, Python, standard inference frameworks — no retraining your team.</span>
+        </p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-tag"><span data-lang="ru">Готов к полёту</span><span data-lang="en">Flight-ready</span></div>
+        <h3>
+          <span data-lang="ru">Спроектирован для борта</span>
+          <span data-lang="en">Engineered for airframes</span>
+        </h3>
+        <p>
+          <span data-lang="ru">В отличие от настольных одноплатников — компактный форм-фактор и камеры дневного и ночного видения до 120 fps, готовые к установке на беспилотник.</span>
+          <span data-lang="en">Unlike desktop single-board computers — a compact form factor with day and night cameras up to 120 fps, ready to mount on a UAV.</span>
+        </p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-tag">SDK · <span data-lang="ru">Модели</span><span data-lang="en">Models</span></div>
+        <h3>
+          <span data-lang="ru">Стартуйте не с нуля</span>
+          <span data-lang="en">Start ahead of zero</span>
+        </h3>
+        <p>
+          <span data-lang="ru">Предобученные модели детекции малых объектов и сопровождения цели в комплекте. Интеграция с автопилотом — без месяцев прототипирования.</span>
+          <span data-lang="en">Pre-trained models for small-object detection and target tracking included. Autopilot integration without months of prototyping.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЕКЦИЯ ПРИМЕНЕНИЕ (03) -->
+<section id="cases">
+  <div class="container">
+    <span class="section-num">03 — <span data-lang="ru">Применение</span><span data-lang="en">Applications</span></span>
+    <h2 class="section-title reveal">
+      <span data-lang="ru">Сценарии применения</span>
+      <span data-lang="en">Use cases</span>
+    </h2>
+
+    <div class="cases-list reveal">
+      <div class="case-row">
+        <div class="case-num">/01</div>
+        <div class="case-title">
+          <span data-lang="ru">Поисково-спасательные работы</span>
+          <span data-lang="en">Search &amp; rescue</span>
+        </div>
+        <div class="case-desc">
+          <span data-lang="ru">Обнаружение людей и объектов интереса с воздуха — даже там, где стандартные нейросети теряют цель в листве и сложном рельефе.</span>
+          <span data-lang="en">Airborne detection of people and objects of interest — even where ordinary networks lose the target in foliage and rough terrain.</span>
+        </div>
+      </div>
+
+      <div class="case-row">
+        <div class="case-num">/02</div>
+        <div class="case-title">
+          <span data-lang="ru">Охрана периметра</span>
+          <span data-lang="en">Perimeter security</span>
+        </div>
+        <div class="case-desc">
+          <span data-lang="ru">Раннее обнаружение нарушителей днём и ночью, автоматическое сопровождение цели.</span>
+          <span data-lang="en">Early intruder detection day and night, automatic target tracking.</span>
+        </div>
+      </div>
+
+      <div class="case-row">
+        <div class="case-num">/03</div>
+        <div class="case-title">
+          <span data-lang="ru">Защита воздушного пространства</span>
+          <span data-lang="en">Airspace protection</span>
+        </div>
+        <div class="case-desc">
+          <span data-lang="ru">Дрон-перехватчик Скайвера нейтрализует несанкционированные БПЛА над гражданскими объектами.</span>
+          <span data-lang="en">The SkyVera interceptor neutralizes unauthorized UAVs over civilian facilities.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-big">
+          <span data-lang="ru">Обсудим вашу задачу.</span>
+          <span data-lang="en">Let's discuss<br>your <span class="em">mission</span>.</span>
+        </div>
+        <p class="contact-sub">
+          <span data-lang="ru">Пилотный проект, лицензирование или совместная разработка. Напишите — ответим в течение рабочего дня.</span>
+          <span data-lang="en">A pilot project, licensing, or joint development. Drop us a line — we reply within one business day.</span>
+        </p>
+      </div>
+
+      <div class="contact-list reveal">
+        <div class="contact-item">
+          <div class="key">Email</div>
+          <a href="mailto:info@skyvera.ru">info@skyvera.ru</a>
+        </div>
+        <div class="contact-item">
+          <div class="key">Telegram</div>
+          <a href="https://t.me/+79959157812" target="_blank" rel="noopener">+7 995 915-78-12</a>
+        </div>
+        <div class="contact-item">
+          <div class="key">
+            <span data-lang="ru">Юридическое лицо</span>
+            <span data-lang="en">Legal entity</span>
+          </div>
+          <div class="legal">
+            <span data-lang="ru">ООО «Скайвера», резидент Сколково</span>
+            <span data-lang="en">SkyVera LLC, Skolkovo resident</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>© 2026 SKYVERA (СКАЙВЕРА)</div>
+    <div>
+      <span data-lang="ru">СДЕЛАНО В РОССИИ</span>
+      <span data-lang="en">MADE IN RUSSIA</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Словарь заголовков для разных языков (SEO)
+  const siteTitles = {
+    'ru': 'Нейропроцессорный модуль RK3588 для дронов и БПЛА — Скайвера (SkyVera)',
+    'en': 'RK3588 neuroprocessor module for drones and UAVs — SkyVera'
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.title = siteTitles[lang] || siteTitles['ru'];
+    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    try { localStorage.setItem('skyvera-lang', lang); } catch(e) {}
+  }
+
+  try {
+    const saved = localStorage.getItem('skyvera-lang');
+    if (saved) setLang(saved);
+  } catch(e) {}
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
